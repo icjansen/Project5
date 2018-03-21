@@ -1,0 +1,65 @@
+.logged_in{
+    font-size: 1.5em;
+    margin-top: 3%;
+}
+
+.logged_in a{
+    color: white;
+    text-decoration: none;
+}
+
+td, th{
+    padding: 15px 15px 10px 15px;
+}
+
+th{
+    font-size: 1em;
+    font-style: italic;
+}
+
+table{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.container{
+    margin-top: 3%;
+    opacity: 0.93;
+}
+
+.container-fluid{
+    border-radius: 5%;
+}
+
+body{
+    /*background-image: url('');*/
+    font-weight: bold;
+    font-size: 1.7em;
+}
+
+.footer{
+    background-color: #222222;
+    border-radius: 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.navbar{
+    border-radius: 0;
+}
+
+.footer p{
+    margin-top: 1%;
+    font-size: 0.7em;
+    color: white;
+}
+
+input, textarea{
+    width: 50%;
+    margin-left: 25%;
+}
+
+.btn-info{
+    width: 100%;
+}
