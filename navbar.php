@@ -30,7 +30,7 @@ session_start();
                 <?php
                 if(isset($_SESSION['first_name'])){
                     echo '
-                          <p class="logged_in"><a href="account.php">Welkom testje'.$_SESSION['first_name'].'!</a>'.'
+                          <p class="logged_in"><a href="account.php">Welkom testjes'.$_SESSION['first_name'].'!</a>'.'
                           <a href="logout.php" class="btn btn-success">Uitloggen</a></p>';
                 }else{
                    echo '
