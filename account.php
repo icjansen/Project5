@@ -89,9 +89,19 @@ while($row=mysqli_fetch_assoc($result)) {
                     if($result5) {
                         while ($row5 = mysqli_fetch_assoc($result5)) {
                             ?>
-                            <li class="btn btn-info" data-toggle="collapse"
-                                data-target="#demo<?php echo $row5['orderID']; ?>">Ordernummer: <?php echo $row5['orderID']; ?>
-                            </li>
+                            <div class="btn btn-info col-xs-12" data-toggle="collapse"
+                                data-target="#demo<?php echo $row5['orderID']; ?>">
+                                <p class="col-xs-10 col-xs-offset-1">Ordernummer: <?php echo $row5['orderID']; ?></p>
+                                <button class="btn btn-success col-xs-1" onclick="printDiv<?php echo $row5['orderID']; ?>()">Print</button>
+                                <script>
+                                    function printDiv<?php echo $row5['orderID']; ?>() {
+                                        window.frames["print_frame<?php echo $row5['orderID']; ?>"].document.body.innerHTML = document.getElementById("demo<?php echo $row5['orderID']; ?>").innerHTML;
+                                        window.frames["print_frame<?php echo $row5['orderID']; ?>"].window.focus();
+                                        window.frames["print_frame<?php echo $row5['orderID']; ?>"].window.print();
+                                    }
+                                </script>
+                                <iframe name="print_frame<?php echo $row5['orderID']; ?>" width="0" height="0" frameborder="0" src="about:blank"></iframe>
+                            </div>
                             <div id="demo<?php echo $row5['orderID']; ?>" class="collapse">
                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit,
                                 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
@@ -124,9 +134,8 @@ while($row=mysqli_fetch_assoc($result)) {
                                     }
                                     ?>
                                 </table>
-                                <button class="btn btn-success" onclick="myFunction()">Printen</button>
+<!--                                <button class="btn btn-success" onclick="myFunction()">Printen</button>-->
                             </div>
-
                             <?php
                         }
                     }else{
