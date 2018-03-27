@@ -191,15 +191,41 @@ while($row=mysqli_fetch_assoc($result)) {
                         <textarea name="message" placeholder="Bericht"></textarea>
                         <input type="submit" name="send_message" value="Bericht versturen" class="btn btn-primary">
                     </form>
+                    <?php
+                    if(isset($_POST['send_message'])) {
+                        $subject=$_POST['subject'];
+                        $message=$_POST['message'];
+                        $timestamp=date('Y-m-d H:i:s');
+                        $sql8 = "INSERT INTO message (userID, timestamp, message, subject) VALUES ((SELECT userID FROM user WHERE username='$username'), '$timestamp', '$message', '$subject')";
+                        $result8=$conn->query($sql8);
+                        if($result8){
+                            echo "Bericht versturen gelukt.";
+                        }else{
+                            echo "Bericht versturen mislukt.";
+                        }
+                    }?>
+                    <?php
+                    $sql7="SELECT * FROM message WHERE (SELECT username FROM user WHERE user.userID=message.userID)='$username'";
+                    $result7=$conn->query($sql7);
+                    while($row7=mysqli_fetch_array($result7)) {
+                        ?>
+                        <div class="btn btn-info col-xs-12" data-toggle="collapse"
+                             data-target="#demo<?php echo $row7['messageID']; ?>"><?php echo $row7['subject']; ?>
+                        </div>
+                        <div id="demo<?php echo $row7['messageID']; ?>" class="collapse">
+                            <i>Onderwerp</i><br>
+                            <?php echo $row7['subject']; ?>
+                            <br>
+                            <i>Bericht</i><br>
+                            <?php echo $row7['message']; ?>
+                        </div>
+                        <?php
+                    }
+                    ?>
                 </div>
             </div>
         </div>
     </div>
-    <script>
-        function myFunction() {
-            window.print();
-        }
-    </script>
     <?php
 }
 include "footer.php";
