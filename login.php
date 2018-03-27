@@ -13,6 +13,8 @@ $crypt = new \Zend\Crypt\Password\Bcrypt();
 ?>
 
 <div class="container">
+    <h1 class="text-center">Inloggen</h1>
+    <br>
     <form action="" method="post">
         <input type="text" name="username" placeholder="Gebruikersnaam" required>
         <input type="password" name="password" placeholder="Wachtwoord" required>
