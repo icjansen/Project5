@@ -8,6 +8,7 @@
 
 include "head.php";
 include "navbar.php";
+$username=$_SESSION['username'];
 ?>
 <style>
     table {
@@ -29,6 +30,7 @@ include "navbar.php";
 </style>
 
 <div class="container">
+    <?php $product="laptop"; ?>
     <div class="row">
         <div class="col-xs-7">
             <img class="product_images" src="ASUS-laptops.png" alt="product">
@@ -85,7 +87,28 @@ include "navbar.php";
             </div>
             <div id="menu2" class="tab-pane fade">
                 <h3>Reviews</h3>
-                <p>Some content in menu 2.</p>
+                <form action="" method="post">
+                    <input type="text" name="subject" placeholder="Voer een titel in">
+                    Bericht<textarea name="message" style="width: 50%; height: 100px;"></textarea>
+                    <input type="number" name="grade" placeholder="Voer een cijfer in">
+                    <input type="submit" name="submit_review" value="Review versturen">
+                </form>
+                <?php
+                if(isset($_POST['submit_review'])){
+                    $subject=$_POST['subject'];
+                    $message=$_POST['message'];
+                    $grade=$_POST['grade'];
+                    $timestamp=date('Y-m-d H:i:s');
+                    $sql="INSERT INTO review (productID, userID, grade, review_message, review_subject, review_timestamp) VALUES ((SELECT productID from product WHERE name='$product'), 
+                    (SELECT userID from user WHERE username='$username'), '$grade', '$message', '$subject', '$timestamp')";
+                    $result=$conn->query($sql);
+                    if($result){
+                        echo "Review plaatsen gelukt.";
+                    }else{
+                        echo "Review plaatsen mislukt.";
+                    }
+                }
+                ?>
             </div>
         </div>
     </div>
