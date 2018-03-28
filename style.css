@@ -60,6 +60,7 @@ input, textarea{
     margin-left: 25%;
 }
 
-.btn-info{
-    width: 100%;
+.product_images{
+    width: 70%;
+    height: auto;
 }
