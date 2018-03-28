@@ -59,3 +59,8 @@ input, textarea{
     width: 50%;
     margin-left: 25%;
 }
+
+.product_images{
+    width: 70%;
+    height: auto;
+}
