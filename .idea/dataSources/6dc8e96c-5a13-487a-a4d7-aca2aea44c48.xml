@@ -1197,7 +1197,7 @@ userID</ColNames>
     </column>
     <column id="298" parent="263" name="image">
       <Position>6</Position>
-      <DataType>int(11)|0</DataType>
+      <DataType>varchar(255)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <index id="299" parent="263" name="product_productID_uindex">

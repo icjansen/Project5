@@ -20,8 +20,8 @@ session_start();
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="index.php">Home</a></li>
-                <li><a href="#">Lorem ipsum</a></li>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="products.php">Producten</a></li>
                 <li><a href="#">Lorem ipsum</a></li>
                 <li><a href="#">Lorem ipsum</a></li>
                 <li><a href="#">Lorem ipsum</a></li>

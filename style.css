@@ -64,3 +64,31 @@ input, textarea{
     width: 70%;
     height: auto;
 }
+
+.product_selection_images{
+    width: 100%;
+    height: auto;
+    vertical-align: middle;
+}
+
+input[name=product_selection]{
+    width: auto;
+}
+
+.product_list{
+    height: 115px;
+    border-bottom: solid #e5dede 1px;
+    line-height: 115px;
+}
+
+@media only screen and (max-width: 667px){
+    body{
+        font-size: 1em;
+    }
+    .product_list{
+        height: 50px;
+    }
+    .btn-info{
+        font-size: 1em;
+    }
+}
