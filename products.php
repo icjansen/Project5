@@ -11,10 +11,10 @@ include "navbar.php";
 ?>
 <div class="container">
     <h1 class="text-center"><i>Zoek producten</i></h1>
-    <div class="col-xs-3 search_container">
-
+    <div class="col-xs-12 col-md-3 search_container">
+        <input type="text" style="width: 90%; margin-left: 10px;" placeholder="Zoeken">
     </div>
-    <div class="col-xs-9 search_results">
+    <div class="col-xs-12 col-md-9 search_results">
         <?php
         $sql="SELECT * FROM product";
         $result=$conn->query($sql);

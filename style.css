@@ -41,7 +41,7 @@ body{
     background-color: #222222;
     border-radius: 0;
     position: absolute;
-    bottom: 0;
+    /*bottom: 0;*/
     width: 100%;
 }
 
@@ -86,9 +86,14 @@ input[name=product_selection]{
         font-size: 1em;
     }
     .product_list{
-        height: 50px;
+        height: 100px;
+        line-height: 100px;
     }
     .btn-info{
         font-size: 1em;
     }
+}
+
+#home, #menu1, #menu2{
+    padding: 3%;
 }
