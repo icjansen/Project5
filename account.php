@@ -24,7 +24,7 @@ while($row=mysqli_fetch_assoc($result)) {
     ?>
 
     <div class="container">
-        <div class="col-xs-4 col-md-3 account_sidebar">
+        <div class="col-xs-12 col-md-3 account_sidebar">
             <ul class="nav nav-tabs nav-stacked account_side_nav" id="myTab">
                 <li class="active"><a data-toggle="tab" href="#home">Mijn gegevens</a></li>
                 <li><a data-toggle="tab" href="#menu1">Bestellingen</a></li>
@@ -32,7 +32,7 @@ while($row=mysqli_fetch_assoc($result)) {
                 <li><a data-toggle="tab" href="#menu3">Berichten</a></li>
             </ul>
         </div>
-        <div class="col-xs-8 col-md-9 account_main">
+        <div class="col-xs-12 col-md-9 account_main">
             <div class="tab-content">
                 <!-- 1 active tab at a time! -->
                 <div id="home" class="tab-pane fade in active">

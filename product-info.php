@@ -106,10 +106,10 @@ while($row=mysqli_fetch_array($result)){
                             $message=$_POST['message'];
                             $grade=$_POST['grade'];
                             $timestamp=date('Y-m-d H:i:s');
-                            $sql="INSERT INTO review (productID, userID, grade, review_message, review_subject, review_timestamp) VALUES ('$productID', 
+                            $sql2="INSERT INTO review (productID, userID, grade, review_message, review_subject, review_timestamp) VALUES ('$productID', 
                     (SELECT userID FROM user WHERE username='$username'), '$grade', '$message', '$subject', '$timestamp')";
-                            $result=$conn->query($sql);
-                            if($result){
+                            $result2=$conn->query($sql2);
+                            if($result2){
                                 echo "Review plaatsen gelukt.";
                             }else{
                                 echo "Review plaatsen mislukt.";

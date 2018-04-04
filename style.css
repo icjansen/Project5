@@ -56,8 +56,11 @@ body{
 }
 
 input, textarea{
-    width: 50%;
-    margin-left: 25%;
+    /*width: 50%;*/
+    /*margin-left: 25%;*/
+    width: 100%;
+    margin-left: 1%;
+    margin-top: 1%;
 }
 
 .product_images{
