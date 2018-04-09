@@ -100,3 +100,12 @@ input[name=product_selection]{
 #home, #menu1, #menu2{
     padding: 3%;
 }
+
+.search_users_menu{
+    width: 100%;
+    height: 50px;
+}
+
+input[name=search_users]{
+    margin-left: 0;
+}
