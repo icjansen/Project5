@@ -13,7 +13,7 @@ $crypt = new \Zend\Crypt\Password\Bcrypt();
 
 $username=$_SESSION['username'];
 
-$sql="SELECT * FROM user WHERE username='$username'";
+$sql="SELECT * FROM user WHERE username='$username'";//selecteer alles uit de tabel user waar de gebruikersnaam gelijk is aan de gebruikersnaam in de sessie(dus de ingelogde gebruiker)
 $result=$conn->query($sql);
 if(mysqli_num_rows($result)==0){
     header('Location: login.php');
@@ -37,7 +37,7 @@ while($row=mysqli_fetch_assoc($result)) {
                 <!-- 1 active tab at a time! -->
                 <div id="home" class="tab-pane fade in active">
                     <h2 class="text-center">Gegevens van <?php echo $row['username']; ?></h2>
-                    <form action="" method="post">
+                    <form action="" method="post"><!--form waarin de door de bovenstaande query gegevens getoond worden-->
                         <input type="text" name="first_name" placeholder="Voornaam" value="<?php echo $row['first_name']; ?>" required>
                         <input type="text" name="last_name" placeholder="Achternaam" value="<?php echo $row['last_name']; ?>" required>
                         <input type="email" name="email" placeholder="E-mailadres" value="<?php echo $row['email']; ?>" required>
@@ -60,7 +60,7 @@ while($row=mysqli_fetch_assoc($result)) {
                     </form>
                 </div>
                 <?php
-                if (isset($_POST['change_btn'])){
+                if (isset($_POST['change_btn'])){//met deze query wordt de inhoud van bovenstaand form opgeslagen in de database(een update van de tabel user)
                     $first_name = mysqli_real_escape_string($conn, $_POST['first_name']);
                     $last_name = mysqli_real_escape_string($conn, $_POST['last_name']);
                     $email = mysqli_real_escape_string($conn, $_POST['email']);
@@ -83,7 +83,7 @@ while($row=mysqli_fetch_assoc($result)) {
                 ?>
                 <div id="menu1" class="tab-pane fade">
                     <h2 class="text-center">Bestellingen</h2>
-                    <?php
+                    <?php//hier worden alle orders uit de tabel order opgehaald, waar de userID gelijk is aan de userID die hoort bij de ingelogde gebruikersnaam
                     $sql5="SELECT * FROM orders WHERE (SELECT username FROM user WHERE userID=orders.userID)='$username'";
                     $result5=$conn->query($sql5);
                     if($result5) {
@@ -92,7 +92,7 @@ while($row=mysqli_fetch_assoc($result)) {
                             <div class="btn btn-info col-xs-12" data-toggle="collapse"
                                 data-target="#demo<?php echo $row5['orderID']; ?>">
                                 <p class="col-xs-10 col-xs-offset-1">Ordernummer: <?php echo $row5['orderID']; ?></p>
-                                <button class="btn btn-success col-xs-1" onclick="printDiv<?php echo $row5['orderID']; ?>()">Print</button>
+                                <button class="btn btn-success col-xs-1" onclick="printDiv<?php echo $row5['orderID']; ?>()">Print</button><!--iedere functie is uniek, door het toevoegen van de orderID, hierdoor roept elke button alleen de printfunctie aan voor de bijbehorende order en dus niet voor de hele pagina-->
                                 <script>
                                     function printDiv<?php echo $row5['orderID']; ?>() {
                                         window.frames["print_frame<?php echo $row5['orderID']; ?>"].document.body.innerHTML = document.getElementById("demo<?php echo $row5['orderID']; ?>").innerHTML;
@@ -116,7 +116,7 @@ while($row=mysqli_fetch_assoc($result)) {
                                         <th>Aantal</th>
                                         <th>Totaalprijs</th>
                                     </tr>
-                                    <?php
+                                    <?php//hier wordt de inhoud van order_line en product opgehaald, waar de orderID overeenkomt met de orderID van de gekozen order(de gekozen collapse), hierdoor krijg je alleen de producten uit de gekozen order te zien
                                     $orderID=$row5['orderID'];
                                     $sql6="SELECT * FROM order_line, product WHERE orderID='$orderID' and order_line.productID=product.productID";
                                     $result6=$conn->query($sql6);
@@ -152,7 +152,7 @@ while($row=mysqli_fetch_assoc($result)) {
                         <input type="password" name="new_password2" placeholder="Nieuw wachtwoord herhalen">
                         <input type="submit" name="change_password_btn" value="Wachtwoord wijzigen">
                     </form>
-                    <?php
+                    <?php//hier worden eerst de waarden uit de form opgehaald, daarna wordt het wachtwoord uit de database gehaald die bij de ingelogde gebruikersnaam hoort, die wordt dmv Bcrypt vergeleken met het ingevoerde wachtwoord, daarna worden de 2 nieuwe ingevoerde wachtwoorden met elkaar vergeleken, als dit allemaal klopt wordt het nieuwe password gehashed en wordt de tabel user geupdate met het nieuwe wachtwoord.
                     if(isset($_POST['change_password_btn'])){
                         $old_password=mysqli_real_escape_string($conn, $_POST['old_password']);
                         $new_password1=mysqli_real_escape_string($conn, $_POST['new_password1']);
@@ -191,7 +191,7 @@ while($row=mysqli_fetch_assoc($result)) {
                         <textarea name="message" placeholder="Bericht"></textarea>
                         <input type="submit" name="send_message" value="Bericht versturen" class="btn btn-primary">
                     </form>
-                    <?php
+                    <?php//hier worden de, in de bovenstaande form ingevoerde, gegevens opgeslagen in de tabel message
                     if(isset($_POST['send_message'])) {
                         $subject=$_POST['subject'];
                         $message=$_POST['message'];
