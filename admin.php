@@ -4,7 +4,7 @@
  * User: Iris
  * Date: 9-4-2018
  * Time: 14:31
-**/
+ **/
 include "head.php";
 include "navbar.php";
 require 'vendor/autoload.php';
@@ -15,16 +15,16 @@ require 'vendor/autoload.php';
     <div class="col-xs-12 col-md-6">
         <form action="" method="post">
             <label class="search_users_menu">Selecteer een gebruiker:<select class="search_users_menu" name="users_list">
-            <?php
-            $sql="SELECT * FROM user";
-            $result=$conn->query($sql);
-            while($row=mysqli_fetch_array($result)){
-                ?>
-                <option><?php echo $row['username'];?></option>
-            <?php
-            }
-            ?>
-            </select>
+                    <?php
+                    $sql="SELECT * FROM user";
+                    $result=$conn->query($sql);
+                    while($row=mysqli_fetch_array($result)){
+                        ?>
+                        <option><?php echo $row['username'];?></option>
+                        <?php
+                    }
+                    ?>
+                </select>
             </label>
             <input type="submit" name="search_users" value="Gebruiker zoeken" class="btn btn-primary">
         </form>
@@ -64,40 +64,41 @@ require 'vendor/autoload.php';
                 }
             }
             if (isset($_POST['edit_user'])) {
-                        $user=$_SESSION['username'];
-                        $username = $_POST['username'];
-                        $first_name = $_POST['first_name'];
-                        $last_name = $_POST['last_name'];
-                        $street = $_POST['street'];
-                        $housenumber = $_POST['housenumber'];
-                        $zipcode = $_POST['zipcode'];
-                        $city = $_POST['city'];
-                        $email = $_POST['email'];
-                        $phonenumber = $_POST['phonenumber'];
-                        $newsletter = $_POST['newsletter'];
-                        $role = $_POST['role'];
+                $user=$_SESSION['username'];
+                $username = $_POST['username'];
+                $first_name = $_POST['first_name'];
+                $last_name = $_POST['last_name'];
+                $street = $_POST['street'];
+                $housenumber = $_POST['housenumber'];
+                $zipcode = $_POST['zipcode'];
+                $city = $_POST['city'];
+                $email = $_POST['email'];
+                $phonenumber = $_POST['phonenumber'];
+                $newsletter = $_POST['newsletter'];
+                $role = $_POST['role'];
 
-                        $stmt = $conn->prepare("UPDATE user SET username=?, first_name=?, last_name=?, address=?, housenumber=?, zipcode=?, city=?, email=?, phonenumber=?, newsletter=?, role=? WHERE username='$user'");
-                        $stmt->bind_param("ssssisssiis", $username, $first_name, $last_name, $street, $housenumber, $zipcode, $city, $email, $phonenumber, $newsletter, $role);
-                        $stmt->execute();
-                        var_dump($stmt);
-
-                            echo "Gelukt";
-                            echo "<meta http-equiv='refresh' content='0'>";
-                    }
-                    if (isset($_POST['delete_user'])) {
-                        $user=$_SESSION['username'];
-                        $sql3 = "DELETE FROM user WHERE username='$user'";
-                        $result3 = $conn->query($sql3);
-                        var_dump($sql3);
-                        if ($result3) {
-                            echo "Gebruiker verwijderen gelukt.";
-                            echo "<meta http-equiv='refresh' content='0'>";
-                        } else {
-                            echo "Verwijderen mislukt.";
-                        }
-                    }
-                    ?>
+                $stmt = $conn->prepare("UPDATE user SET username=?, first_name=?, last_name=?, address=?, housenumber=?, zipcode=?, city=?, email=?, phonenumber=?, newsletter=?, role=? WHERE username='$user'");
+                $stmt->bind_param("ssssisssiis", $username, $first_name, $last_name, $street, $housenumber, $zipcode, $city, $email, $phonenumber, $newsletter, $role);
+                $stmt->execute();
+//                      var_dump($stmt);
+                if(!$stmt->execute()){
+                    echo "Bericht versturen mislukt.";
+                }
+                echo "<meta http-equiv='refresh' content='0'>";
+            }
+            if (isset($_POST['delete_user'])) {
+                $user=$_SESSION['username'];
+                $sql3 = "DELETE FROM user WHERE username='$user'";
+                $result3 = $conn->query($sql3);
+                var_dump($sql3);
+                if ($result3) {
+                    echo "Gebruiker verwijderen gelukt.";
+                    echo "<meta http-equiv='refresh' content='0'>";
+                } else {
+                    echo "Verwijderen mislukt.";
+                }
+            }
+            ?>
         </form>
     </div>
 </div>
