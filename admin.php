@@ -77,17 +77,13 @@ require 'vendor/autoload.php';
                         $newsletter = $_POST['newsletter'];
                         $role = $_POST['role'];
 
-//                        $stmt = $conn->prepare("UPDATE user SET username=?, first_name=?, last_name=?, address=?, housenumber=?, zipcode=?, city=?, email=?, phonenumber=?, newsletter=?, role=? WHERE username='$user'");
-//                        $stmt->bind_param("ssssisssiis", $username, $first_name, $last_name, $street, $housenumber, $zipcode, $city, $email, $phonenumber, $newsletter, $role);
-//                        $stmt->execute();
-//                        var_dump($stmt);
-                        $sql4="UPDATE user SET first_name='$first_name' WHERE username='$user'";
-                        var_dump($sql4);
-                        $result4=$conn->query($sql4);
-                        if($result4){
+                        $stmt = $conn->prepare("UPDATE user SET username=?, first_name=?, last_name=?, address=?, housenumber=?, zipcode=?, city=?, email=?, phonenumber=?, newsletter=?, role=? WHERE username='$user'");
+                        $stmt->bind_param("ssssisssiis", $username, $first_name, $last_name, $street, $housenumber, $zipcode, $city, $email, $phonenumber, $newsletter, $role);
+                        $stmt->execute();
+                        var_dump($stmt);
+
                             echo "Gelukt";
                             echo "<meta http-equiv='refresh' content='0'>";
-                        }
                     }
                     if (isset($_POST['delete_user'])) {
                         $user=$_SESSION['username'];
