@@ -60,7 +60,8 @@ while($row=mysqli_fetch_assoc($result)) {
                     </form>
                 </div>
                 <?php
-                if (isset($_POST['change_btn'])){//met deze query wordt de inhoud van bovenstaand form opgeslagen in de database(een update van de tabel user)
+                if (isset($_POST['change_btn'])){
+                    //met deze query wordt de inhoud van bovenstaand form opgeslagen in de database(een update van de tabel user)
                     $first_name = mysqli_real_escape_string($conn, $_POST['first_name']);
                     $last_name = mysqli_real_escape_string($conn, $_POST['last_name']);
                     $email = mysqli_real_escape_string($conn, $_POST['email']);
@@ -71,19 +72,25 @@ while($row=mysqli_fetch_assoc($result)) {
                     $phonenumber = mysqli_real_escape_string($conn, $_POST['phonenumber']);
                     $newsletter = mysqli_real_escape_string($conn, $_POST['newsletter']);
 
-                    $sql2 = "UPDATE user SET first_name = '$first_name', last_name = '$last_name', email = '$email', address = '$address', housenumber = '$housenumber', zipcode = '$zipcode', city = '$city', phonenumber = '$phonenumber', newsletter = '$newsletter' WHERE username = '$username'";
-                    $result2 = $conn->query($sql2);
-                    if($conn->query($sql2) === TRUE){
-                        echo "";
-                        echo "<meta http-equiv='refresh' content='0'>";
-                    }else{
-                        echo "Error: " . $sql2 . "<br>" . $conn->error;
-                    }
+//                    $sql2 = "UPDATE user SET first_name = '$first_name', last_name = '$last_name', email = '$email', address = '$address', housenumber = '$housenumber', zipcode = '$zipcode', city = '$city', phonenumber = '$phonenumber', newsletter = '$newsletter' WHERE username = '$username'";
+//                    $result2 = $conn->query($sql2);
+//                    if($conn->query($sql2) === TRUE){
+//                        echo "";
+//                        echo "<meta http-equiv='refresh' content='0'>";
+//                    }else{
+//                        echo "Error: " . $sql2 . "<br>" . $conn->error;
+//                    }
+
+                    $stmt=$conn->prepare("UPDATE user SET first_name=?, last_name=?, email=?, address=?, housenumber=?, zipcode=?, city=?, phonenumber=?, newsletter=? WHERE username = '$username'");
+                    $stmt->bind_param("ssssissii", $first_name, $last_name, $email, $address, $housenumber, $zipcode, $city, $phonenumber, $newsletter);
+                    $stmt->execute();
+                    echo "<meta http-equiv='refresh' content='0'>";
                 }
                 ?>
                 <div id="menu1" class="tab-pane fade">
                     <h2 class="text-center">Bestellingen</h2>
-                    <?php//hier worden alle orders uit de tabel order opgehaald, waar de userID gelijk is aan de userID die hoort bij de ingelogde gebruikersnaam
+                    <?php
+                    //hier worden alle orders uit de tabel order opgehaald, waar de userID gelijk is aan de userID die hoort bij de ingelogde gebruikersnaam
                     $sql5="SELECT * FROM orders WHERE (SELECT username FROM user WHERE userID=orders.userID)='$username'";
                     $result5=$conn->query($sql5);
                     if($result5) {
@@ -116,7 +123,8 @@ while($row=mysqli_fetch_assoc($result)) {
                                         <th>Aantal</th>
                                         <th>Totaalprijs</th>
                                     </tr>
-                                    <?php//hier wordt de inhoud van order_line en product opgehaald, waar de orderID overeenkomt met de orderID van de gekozen order(de gekozen collapse), hierdoor krijg je alleen de producten uit de gekozen order te zien
+                                    <?php
+                                    //hier wordt de inhoud van order_line en product opgehaald, waar de orderID overeenkomt met de orderID van de gekozen order(de gekozen collapse), hierdoor krijg je alleen de producten uit de gekozen order te zien
                                     $orderID=$row5['orderID'];
                                     $sql6="SELECT * FROM order_line, product WHERE orderID='$orderID' and order_line.productID=product.productID";
                                     $result6=$conn->query($sql6);
@@ -152,7 +160,8 @@ while($row=mysqli_fetch_assoc($result)) {
                         <input type="password" name="new_password2" placeholder="Nieuw wachtwoord herhalen">
                         <input type="submit" name="change_password_btn" value="Wachtwoord wijzigen">
                     </form>
-                    <?php//hier worden eerst de waarden uit de form opgehaald, daarna wordt het wachtwoord uit de database gehaald die bij de ingelogde gebruikersnaam hoort, die wordt dmv Bcrypt vergeleken met het ingevoerde wachtwoord, daarna worden de 2 nieuwe ingevoerde wachtwoorden met elkaar vergeleken, als dit allemaal klopt wordt het nieuwe password gehashed en wordt de tabel user geupdate met het nieuwe wachtwoord.
+                    <?php
+                    //hier worden eerst de waarden uit de form opgehaald, daarna wordt het wachtwoord uit de database gehaald die bij de ingelogde gebruikersnaam hoort, die wordt dmv Bcrypt vergeleken met het ingevoerde wachtwoord, daarna worden de 2 nieuwe ingevoerde wachtwoorden met elkaar vergeleken, als dit allemaal klopt wordt het nieuwe password gehashed en wordt de tabel user geupdate met het nieuwe wachtwoord.
                     if(isset($_POST['change_password_btn'])){
                         $old_password=mysqli_real_escape_string($conn, $_POST['old_password']);
                         $new_password1=mysqli_real_escape_string($conn, $_POST['new_password1']);
@@ -167,12 +176,20 @@ while($row=mysqli_fetch_assoc($result)) {
                             if ($crypt->verify($old_password, $dbpassword)) {
                                 if ($new_password1 == $new_password2) {
                                     $hashed_password_new = $crypt->create($new_password2);
-                                    $sql4 = "UPDATE user SET password = '$hashed_password_new' WHERE username = '$username'";
-                                    $result4 = $conn->query($sql4);
-                                    if ($conn->query($sql4) === TRUE) {
-                                        echo "Uw wachtwoord is aangepast!";
-                                    } else {
-                                        echo "Error: " . $sql4 . "<br>" . $conn->error;
+
+//                                    $sql4 = "UPDATE user SET password = '$hashed_password_new' WHERE username = '$username'";
+//                                    $result4 = $conn->query($sql4);
+//                                    if ($conn->query($sql4) === TRUE) {
+//                                        echo "Uw wachtwoord is aangepast!";
+//                                    } else {
+//                                        echo "Error: " . $sql4 . "<br>" . $conn->error;
+//                                    }
+                                    $stmt=$conn->prepare("UPDATE user SET password=? WHERE username='$username'");
+                                    $stmt->bind_param("s", $hashed_password_new);
+                                    $stmt->execute();
+                                    echo "Wachtwoord wijzigen gelukt.";
+                                    if (!$stmt->execute()) {
+                                        echo "Wachtwoord wijzigen mislukt.";
                                     }
                                 } else {
                                     echo "Wachtwoorden komen niet overeen!";
@@ -191,16 +208,24 @@ while($row=mysqli_fetch_assoc($result)) {
                         <textarea name="message" placeholder="Bericht"></textarea>
                         <input type="submit" name="send_message" value="Bericht versturen" class="btn btn-primary">
                     </form>
-                    <?php//hier worden de, in de bovenstaande form ingevoerde, gegevens opgeslagen in de tabel message
+                    <?php
+                    //hier worden de, in de bovenstaande form ingevoerde, gegevens opgeslagen in de tabel message
                     if(isset($_POST['send_message'])) {
                         $subject=$_POST['subject'];
                         $message=$_POST['message'];
                         $timestamp=date('Y-m-d H:i:s');
-                        $sql8 = "INSERT INTO message (userID, timestamp, message, subject) VALUES ((SELECT userID FROM user WHERE username='$username'), '$timestamp', '$message', '$subject')";
-                        $result8=$conn->query($sql8);
-                        if($result8){
-                            echo "Bericht versturen gelukt.";
-                        }else{
+//                        $sql8 = "INSERT INTO message (userID, timestamp, message, subject) VALUES ((SELECT userID FROM user WHERE username='$username'), '$timestamp', '$message', '$subject')";
+//                        $result8=$conn->query($sql8);
+//                        if($result8){
+//                            echo "Bericht versturen gelukt.";
+//                        }else{
+//                            echo "Bericht versturen mislukt.";
+//                        }
+                        $stmt=$conn->prepare("INSERT INTO message(userID, timestamp, subject, message) VALUES (?, ?, ?, ?)");
+                        $stmt->bind_param("isss", $userID, $timestamp, $subject, $message);
+                        $stmt->execute();
+                        echo "Bericht versturen gelukt.";
+                        if(!$stmt->execute()){
                             echo "Bericht versturen mislukt.";
                         }
                     }?>
