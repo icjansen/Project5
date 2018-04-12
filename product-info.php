@@ -39,7 +39,7 @@ while($row=mysqli_fetch_array($result)){
     <div class="container">
         <div class="row" style="height: 200px;">
             <div class="col-xs-7">
-                <img class="product_images" src="<?php echo $row['image'];?>" alt="product">
+                <img class="product_images" src="images/<?php echo $row['image'];?>" alt="product">
             </div>
             <div class="col-xs-5">
                 <p style="height: 200px; overflow: scroll;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in elementum tellus, sed consectetur felis. Vivamus consectetur vehicula augue non ornare. Mauris pellentesque erat quis leo varius condimentum. Pellentesque lacinia nisl in lorem posuere congue. Mauris quam est, varius nec lorem vel, posuere finibus orci. Nam mi tellus, vestibulum quis dictum eu, malesuada eu ex. Nam non enim vitae lectus sodales lacinia.</p>

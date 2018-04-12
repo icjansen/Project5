@@ -16,26 +16,26 @@ session_start();
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.php">PC4U</a>
+            <a class="navbar-brand" href="../index.php">PC4U</a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li><a href="index.php">Home</a></li>
-                <li><a href="products.php">Producten</a></li>
-                <li><a href="store.php">Winkel</a></li>
-                <li><a href="cart.php">Winkelwagen</a></li>
-                <li><a href="admin.php">Admin</a></li>
+                <li><a href="../index.php">Home</a></li>
+                <li><a href="../products.php">Producten</a></li>
+                <li><a href="../store.php">Winkel</a></li>
+                <li><a href="../cart.php">Winkelwagen</a></li>
+                <li><a href="../admin.php">Admin</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <?php
                 if(isset($_SESSION['first_name'])){
                     echo '
-                          <p class="logged_in"><a href="account.php">Welkom '.$_SESSION['first_name'].'!</a>'.'
+                          <p class="logged_in"><a href="../account.php">Welkom ' .$_SESSION['first_name'].'!</a>'. '
                           <a href="logout.php" class="btn btn-success">Uitloggen</a></p>';
                 }else{
                    echo '
-                    <li><a href="signup.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                    <li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a href="../signup.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li><a href="../login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                     ';
                 }
                 ?>

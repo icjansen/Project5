@@ -22,7 +22,7 @@ include "navbar.php";
         ?>
             <div class="row product_list">
                 <div class="col-xs-4 col-md-2">
-                    <img class="product_selection_images" src="<?php echo $row['image'];?>" alt="product_image">
+                    <img class="product_selection_images" src="images/<?php echo $row['image'];?>" alt="product_image">
                 </div>
                 <div class="col-xs-3 col-md-8 product_description">
                     <?php echo $row['name'];?>
