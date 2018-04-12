@@ -8,12 +8,12 @@
 include "./includes/head.php";
 include "./includes/navbar.php";
 $username=$_SESSION['username'];
-$sql2="SELECT * FROM user WHERE username='$username'";
-$result2=$conn->query($sql2);
-while($row2=mysqli_fetch_array($result2)){
-    $_SESSION['userID']=$row2['userID'];
-}
-$userID=$_SESSION['userID'];
+//$sql2="SELECT * FROM user WHERE username='$username'";
+//$result2=$conn->query($sql2);
+//while($row2=mysqli_fetch_array($result2)){
+//    $_SESSION['userID']=$row2['userID'];
+//}
+//$userID=$_SESSION['userID'];
 
 if(!isset($_SESSION['cart'])) {
     $array = array();
@@ -42,7 +42,7 @@ if(isset($_POST['confirm_order'])) {
 
     if ($stmt->execute()) {
 //  orderID die hierboven is gemaakt ophalen met de daarboven aangegeven variabelen
-        $sql = "SELECT * FROM orders WHERE userID='$userID' AND delivery_date='$delivery_date'";
+        $sql = "SELECT * FROM orders WHERE userID=(SELECT userID FROM user WHERE username='$username') AND delivery_date='$delivery_date'";
         $result = $conn->query($sql);
         while ($row = mysqli_fetch_array($result)) {
             $orderID = $row['orderID'];
@@ -71,6 +71,6 @@ if($_SESSION['cart'] != null){
     </div>
     <?php
 }else{
-    echo "Bestelling voltooid.";
+    echo "Selecteer eerst een product om te kunnen bestellen.";
 }
 ?>
