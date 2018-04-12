@@ -214,6 +214,11 @@ while($row=mysqli_fetch_assoc($result)) {
                         $subject=$_POST['subject'];
                         $message=$_POST['message'];
                         $timestamp=date('Y-m-d H:i:s');
+                        $sqluserID="SELECT * FROM user WHERE username='$username'";
+                        $resultuserID=$conn->query($sqluserID);
+                        while($rowuserID=mysqli_fetch_array($resultuserID)){
+                            $userID=$rowuserID['userID'];
+                        }
 //                        $sql8 = "INSERT INTO message (userID, timestamp, message, subject) VALUES ((SELECT userID FROM user WHERE username='$username'), '$timestamp', '$message', '$subject')";
 //                        $result8=$conn->query($sql8);
 //                        if($result8){
