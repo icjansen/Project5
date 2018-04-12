@@ -8,6 +8,12 @@
 include "./includes/head.php";
 include "./includes/navbar.php";
 $username=$_SESSION['username'];
+$sql2="SELECT * FROM user WHERE username='$username'";
+$result2=$conn->query($sql2);
+while($row2=mysqli_fetch_array($result2)){
+    $_SESSION['userID']=$row2['userID'];
+}
+$userID=$_SESSION['userID'];
 
 if(!isset($_SESSION['cart'])) {
     $array = array();
@@ -36,7 +42,7 @@ if(isset($_POST['confirm_order'])) {
 
     if ($stmt->execute()) {
 //  orderID die hierboven is gemaakt ophalen met de daarboven aangegeven variabelen
-        $sql = "SELECT * FROM orders WHERE userID=(SELECT userID FROM user WHERE username='$username') AND order_date='$order_date' AND delivery_date='$delivery_date'";
+        $sql = "SELECT * FROM orders WHERE userID='$userID' AND delivery_date='$delivery_date'";
         $result = $conn->query($sql);
         while ($row = mysqli_fetch_array($result)) {
             $orderID = $row['orderID'];
@@ -45,20 +51,26 @@ if(isset($_POST['confirm_order'])) {
     $stmt->close();
 
     foreach ($array as $arrayproduct) {
-        $productID = $arrayproduct;
-    }
+        //$productID = $arrayproduct;
 
 //de hierboven opgehaalde orderID met de daarboven aangegeven productID en quantity versturen naar de tabel order_line
-    $stmt = $conn->prepare("INSERT INTO order_line (orderID, productID, quantity) VALUES (?, ?, ?)");
-    $stmt->bind_param("iii", $orderID, $productID, $quantity);
-    $stmt->execute();
-    $stmt->close();
-    $array=array();
-    $_SESSION['cart']=$array;
+        $stmt = $conn->prepare("INSERT INTO order_line (orderID, productID, quantity) VALUES (?, ?, ?)");
+        $stmt->bind_param("iii", $orderID, $arrayproduct, $quantity);
+        $stmt->execute();
+        $stmt->close();
+        $array = array();
+        $_SESSION['cart'] = $array;
+    }
+}
+if($_SESSION['cart'] != null){
+    ?>
+    <div class="container">
+        <form action="" method="post">
+            <input type="submit" name="confirm_order" value="Bestelling afronden" class="btn btn-success">
+        </form>
+    </div>
+    <?php
+}else{
+    echo "Bestelling voltooid.";
 }
 ?>
-<div class="container">
-    <form action="" method="post">
-        <input type="submit" name="confirm_order" value="Bestelling afronden" class="btn btn-success">
-    </form>
-</div>
