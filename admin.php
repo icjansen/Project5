@@ -34,7 +34,7 @@ require 'vendor/autoload.php';
             <?php
             if(isset($_POST['search_users'])){
                 $user=$_POST['users_list'];
-                $_SESSION['username']=$user;
+                $_SESSION['change_user']=$user;
                 $sql2="SELECT * FROM user WHERE username='$user'";
                 $result2=$conn->query($sql2);
                 while($row2=mysqli_fetch_array($result2)) {
@@ -53,10 +53,15 @@ require 'vendor/autoload.php';
                     <input type="email" name="email" value="<?php echo $row2['email']; ?>" placeholder="E-mailadres">
                     <input type="number" name="phonenumber" value="0<?php echo $row2['phonenumber']; ?>"
                            placeholder="Telefoonnummer">
-                    <input type="checkbox" name="newsletter"
-                           placeholder="Nieuwsbrief" <?php if ($row2['newsletter'] == 1) {
-                        echo 'checked="checked"';
-                    } ?>>
+                    <?php
+                    if($row2['newsletter'] ==1){
+                        $checked="checked";
+                    }else {
+                        $checked = "";
+                    }
+                    ?>
+                    <input type="hidden" name="newsletter" value="0">
+                    <label><input type="checkbox" name="newsletter" value="1" <?php echo $checked; ?>>Nieuwsbrief</label>
                     <input type="text" name="role" value="<?php echo $row2['role']; ?>" placeholder="Rol">
                     <input type="submit" name="edit_user" value="Wijzigingen opslaan" class="btn btn-success">
                     <input type="submit" name="delete_user" value="Gebruiker verwijderen" class="btn btn-danger">
@@ -64,7 +69,7 @@ require 'vendor/autoload.php';
                 }
             }
             if (isset($_POST['edit_user'])) {
-                $user=$_SESSION['username'];
+                $user=$_SESSION['change_user'];
                 $username = $_POST['username'];
                 $first_name = $_POST['first_name'];
                 $last_name = $_POST['last_name'];

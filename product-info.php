@@ -11,7 +11,7 @@ include "navbar.php";
 if(isset($_SESSION['username'])) { $username=$_SESSION['username']; }
 if(isset($_GET['product_selection'])){
     $productID=$_GET['productID'];
-    echo $productID;
+//    echo $productID;
 }
 $sql="SELECT * FROM product WHERE productID='$productID'";
 $result=$conn->query($sql);
@@ -93,12 +93,28 @@ while($row=mysqli_fetch_array($result)){
                 </div>
                 <div id="menu2" class="tab-pane fade">
                     <h3>Reviews</h3>
+                    <a class="btn btn-primary upload_button" href="#upload_anchor">Klik hier om je eigen review te schrijven!</a>
+                    <?php
+                    $sql3="SELECT * FROM review INNER JOIN user ON review.userID=user.userID";
+                    $result3=$conn->query($sql3);
+                    while($row3=mysqli_fetch_array($result3)){
+                        ?>
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><?php echo $row3['review_subject'];?>, cijfer: <?php echo $row3['grade'];?></div>
+                            <div class="panel-body"><?php echo $row3['review_message'];?></div>
+                            <div class="panel-footer"><i>Geschreven door: <?php echo $row3['username'];?> op <?php echo $row3['review_timestamp'];?></i></div>
+                        </div>
+                        <?php
+                    }
+                    ?>
+
+
                     <?php if(isset($_SESSION['username'])){?>
-                        <form action="" method="post">
+                        <form id="upload_anchor" action="" method="post">
                             <input type="text" name="subject" placeholder="Voer een titel in">
-                            Bericht<textarea name="message" style="width: 50%; height: 100px;"></textarea>
+                            Bericht<textarea name="message" style="width: 100%; height: 100px;"></textarea>
                             <input type="number" name="grade" placeholder="Voer een cijfer in">
-                            <input type="submit" name="submit_review" value="Review versturen">
+                            <input type="submit" name="submit_review" value="Review versturen" class="btn btn-success">
                         </form>
                         <?php
                         if(isset($_POST['submit_review'])){
@@ -117,7 +133,7 @@ while($row=mysqli_fetch_array($result)){
                         }
                     } else{
                         ?>
-                        <h2><a href="login.php">Log in</a> om een review te kunnen schrijven.</h2>
+                        <h2><a id="upload_anchor" href="login.php">Log in</a> om een review te kunnen schrijven.</h2>
                         <?php
                     }
                     ?>

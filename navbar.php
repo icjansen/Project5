@@ -24,7 +24,7 @@ session_start();
                 <li><a href="products.php">Producten</a></li>
                 <li><a href="store.php">Winkel</a></li>
                 <li><a href="cart.php">Winkelwagen</a></li>
-                <li><a href="#">Lorem ipsum</a></li>
+                <li><a href="admin.php">Admin</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <?php

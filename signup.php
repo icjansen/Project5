@@ -26,8 +26,8 @@ $crypt = new \Zend\Crypt\Password\Bcrypt();
         <input type="text" name="city" placeholder="Stad" required>
         <input type="tel" name="phonenumber" placeholder="Telefoonnummer" required>
         <input type="text" name="username" placeholder="Gebruikersnaam" required>
-        <input type="password" name="password1" placeholder="Wachtwoord" required>
-        <input type="password" name="password2" placeholder="Wachtwoord herhalen">
+        <input type="password" name="password1" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" placeholder="Wachtwoord" required>
+        <input type="password" name="password2" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" placeholder="Wachtwoord herhalen">
         <input type="hidden" name="newsletter" value="0">
         <label><input type="checkbox" name="newsletter" value="1">Nieuwsbrief</label>
         <input type="submit" name="signup_btn" value="Registreren" class="btn btn-primary">

@@ -156,8 +156,8 @@ while($row=mysqli_fetch_assoc($result)) {
                     <h2 class="text-center">Wachtwoord wijzigen</h2>
                     <form action="" method="post">
                         <input type="password" name="old_password" placeholder="Oud wachtwoord">
-                        <input type="password" name="new_password1" placeholder="Nieuw wachtwoord">
-                        <input type="password" name="new_password2" placeholder="Nieuw wachtwoord herhalen">
+                        <input type="password" name="new_password1" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" placeholder="Nieuw wachtwoord" required>
+                        <input type="password" name="new_password2" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" placeholder="Nieuw wachtwoord herhalen">
                         <input type="submit" name="change_password_btn" value="Wachtwoord wijzigen">
                     </form>
                     <?php
