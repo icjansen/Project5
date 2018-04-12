@@ -28,4 +28,4 @@ if(isset($_POST['add_to_cart'])){//de inhoud van het formulier wordt opgehaald, 
     print_r($_SESSION['cart']);
 }
 
-include './includes/footer.php';
+//include './includes/footer.php';
