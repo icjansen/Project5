@@ -52,19 +52,29 @@ if(isset($_POST['signup_btn'])){
     $role = "user";
 
     if($password1==$password2) {
-        $sql = "INSERT INTO user (username, password, first_name, last_name, address, housenumber, zipcode, city, email, phonenumber, newsletter, role) 
-                VALUES ('$username', '$hashed_password', '$first_name', '$last_name', '$address', '$housenumber', '$zipcode', '$city', '$email', '$phonenumber', '$newsletter', '$role') ";
-        $result = $conn->query($sql);
-//        var_dump($sql);
-        echo mysqli_error($conn);
-        if ($result) {
+//        $sql = "INSERT INTO user (username, password, first_name, last_name, address, housenumber, zipcode, city, email, phonenumber, newsletter, role)
+//                VALUES ('$username', '$hashed_password', '$first_name', '$last_name', '$address', '$housenumber', '$zipcode', '$city', '$email', '$phonenumber', '$newsletter', '$role') ";
+//        $result = $conn->query($sql);
+////        var_dump($sql);
+////        echo mysqli_error($conn);
+//        if ($result) {
+//            $_SESSION['username']=$username;
+//            $_SESSION['first_name']=$first_name;
+//            echo "Registreren gelukt.";
+////            header('Location: index.php');
+////            exit();
+//        } else {
+//            echo "Registreren mislukt!";
+//        }
+
+        $stmt=$conn->prepare("INSERT INTO user(username, password, first_name, last_name, address, housenumber, zipcode, city, email, phonenumber, newsletter, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?)");
+        $stmt->bind_param("sssssisssiis", $username, $hashed_password,  $first_name, $last_name, $address, $housenumber, $zipcode, $city, $email, $phonenumber, $newsletter, $role);
+        if($stmt->execute()){
             $_SESSION['username']=$username;
             $_SESSION['first_name']=$first_name;
-            var_dump($sql);
-//            header('Location: index.php');
-//            exit();
-        } else {
-            echo "Registreren mislukt!";
+            echo "Registreren gelukt.";
+        }else{
+            echo "Registreren mislukt.";
         }
     }else echo "Wachtwoorden komen niet overeen!";
 }
