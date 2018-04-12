@@ -51,11 +51,13 @@ if(isset($_POST['confirm_order'])) {
     $stmt->close();
 
     foreach ($array as $arrayproduct) {
-        //$productID = $arrayproduct;
+            $productID = $arrayproduct[0];
+            $quantity = $arrayproduct[1];
+            //$productID = $arrayproduct;
 
 //de hierboven opgehaalde orderID met de daarboven aangegeven productID en quantity versturen naar de tabel order_line
         $stmt = $conn->prepare("INSERT INTO order_line (orderID, productID, quantity) VALUES (?, ?, ?)");
-        $stmt->bind_param("iii", $orderID, $arrayproduct, $quantity);
+        $stmt->bind_param("iii", $orderID, $productID, $quantity);
         $stmt->execute();
         $stmt->close();
         $array = array();
