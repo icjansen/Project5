@@ -6,8 +6,8 @@
  * Time: 15:19
  */
 
-include "head.php";
-include "navbar.php";
+include "./includes/head.php";
+include "./includes/navbar.php";
 ?>
 <div class="container">
     <h1 class="text-center"><i>Zoek producten</i></h1>
@@ -40,5 +40,5 @@ include "navbar.php";
     </div>
 </div>
 <?php
-include 'footer.php';
+include './includes/footer.php';
 ?>

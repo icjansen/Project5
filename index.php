@@ -5,8 +5,8 @@
  * Date: 6-3-2018
  * Time: 14:31
  */
-include "head.php";
-include "navbar.php";
+include "./includes/head.php";
+include "./includes/navbar.php";
 ?>
 <style>
     /*.col-xs-3, .col-xs-6{
@@ -43,5 +43,5 @@ include "navbar.php";
 </div>
 
 <?php
-include "footer.php";
+include "./includes/footer.php";
 ?>

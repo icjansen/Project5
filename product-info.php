@@ -6,8 +6,8 @@
  * Time: 15:19
  */
 
-include "head.php";
-include "navbar.php";
+include "./includes/head.php";
+include "./includes/navbar.php";
 if(isset($_SESSION['username'])) { $username=$_SESSION['username']; }
 if(isset($_GET['product_selection'])){
     $productID=$_GET['productID'];
@@ -144,4 +144,4 @@ while($row=mysqli_fetch_array($result)){
     <?php } ?>
 
 <?php
-include 'footer.php';
+include './includes/footer.php';

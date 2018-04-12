@@ -8,6 +8,5 @@
 
 session_start();
 session_destroy();
-//header("Location: ". $_SESSION['url']);//redirect needed, otherwise the user will stay on logout.php!
 header('Location: index.php');
 exit();

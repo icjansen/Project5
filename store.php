@@ -1,6 +1,6 @@
 <?php
-include "head.php";
-include "navbar.php";
+include "./includes/head.php";
+include "./includes/navbar.php";
 
 if(!isset($_SESSION['cart'])) {
     $array = array();
@@ -27,3 +27,5 @@ if(isset($_POST['add_to_cart'])){//de inhoud van het formulier wordt opgehaald, 
     $_SESSION['cart']=$array;
     print_r($_SESSION['cart']);
 }
+
+include './includes/footer.php';

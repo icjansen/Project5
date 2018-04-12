@@ -5,8 +5,8 @@
  * Date: 10-4-2018
  * Time: 14:44
  */
-include "head.php";
-include "navbar.php";
+include "./includes/head.php";
+include "./includes/navbar.php";
 
 print_r($_SESSION['cart']);
 

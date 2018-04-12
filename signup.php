@@ -5,8 +5,8 @@
  * Date: 6-3-2018
  * Time: 14:42
  */
-include "head.php";
-include "navbar.php";
+include "./includes/head.php";
+include "./includes/navbar.php";
 require 'vendor/autoload.php';
 
 $crypt = new \Zend\Crypt\Password\Bcrypt();
@@ -82,5 +82,5 @@ $conn->close();
 ?>
 
 <?php
-include "footer.php";
+include "./includes/footer.php";
 ?>

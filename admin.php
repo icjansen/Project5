@@ -5,8 +5,8 @@
  * Date: 9-4-2018
  * Time: 14:31
  **/
-include "head.php";
-include "navbar.php";
+include "./includes/head.php";
+include "./includes/navbar.php";
 require 'vendor/autoload.php';
 ?>
 
@@ -107,4 +107,4 @@ require 'vendor/autoload.php';
         </form>
     </div>
 </div>
-<?php include 'footer.php';?>
+<?php include './includes/footer.php';?>
