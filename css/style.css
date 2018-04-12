@@ -109,3 +109,11 @@ input[name=product_selection]{
 input[name=search_users]{
     margin-left: 0;
 }
+
+.store_product_images{
+    max-height: 200px;
+}
+
+.store_products{
+    height: 400px;
+}

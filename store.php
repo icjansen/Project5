@@ -11,8 +11,9 @@ $sql="SELECT * FROM product";//hiermee wordt alles uit de tabel product geselect
 $result=$conn->query($sql);
 while($row=mysqli_fetch_array($result)){
     ?>
-    <div class="col-xs-3">
-        <?php echo $row['name'];?>
+    <div class="col-xs-12 col-md-3 store_products">
+        <h3><?php echo $row['name'];?></h3>
+        <img src="images/<?php echo $row['image'];?>" alt="product_image" class="store_product_images">
         <form action="" method="post">
             <input type="hidden" name="productID" value="<?php echo $row['productID'];?>"><!--de productID wordt in een hidden input meegegeven, zodat aan de hand hiervan een product in de winkelwagen gedaan kan worden.-->
             <label>Selecteer aantal:

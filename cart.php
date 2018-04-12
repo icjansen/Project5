@@ -23,7 +23,10 @@ if(!isset($_SESSION['cart'])) {
 
 $array=$_SESSION['cart'];
 
+//print_r($array);
+echo "<pre>";
 print_r($array);
+echo "</pre>";
 
 //met foreach elk product, query per product?
 
