@@ -1,0 +1,1 @@
+producten bestellen werkt niet zonder te zijn ingelogd (dan krijg je foutmeldingen!)
