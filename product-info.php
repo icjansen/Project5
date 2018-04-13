@@ -8,15 +8,18 @@
 
 include "./includes/head.php";
 include "./includes/navbar.php";
-if(isset($_SESSION['username'])) { $username=$_SESSION['username']; }
+if(isset($_SESSION['username'])) {
+    $username=$_SESSION['username'];
+}
 if(isset($_GET['product_selection'])){
     $productID=$_GET['productID'];
-//    echo $productID;
 }
+
+//de productID wordt opgehaald(die is ingevuld op de vorige pagina), daarmee wordt alle info van dat product opgehaald
 $sql="SELECT * FROM product WHERE productID='$productID'";
 $result=$conn->query($sql);
 while($row=mysqli_fetch_array($result)){
-?>
+    ?>
     <style>
         table {
             font-family: arial, sans-serif;
@@ -95,6 +98,7 @@ while($row=mysqli_fetch_array($result)){
                     <h3>Reviews</h3>
                     <a class="btn btn-primary upload_button" href="#upload_anchor">Klik hier om je eigen review te schrijven!</a>
                     <?php
+                    //hier worden de tabellen review en user gecombineerd, zodat bij de juiste review de juiste user komt te staan
                     $sql3="SELECT * FROM review INNER JOIN user ON review.userID=user.userID";
                     $result3=$conn->query($sql3);
                     while($row3=mysqli_fetch_array($result3)){
@@ -108,7 +112,8 @@ while($row=mysqli_fetch_array($result)){
                     }
                     ?>
 
-
+                    <!--wanneer de gebruiker is ingelogd, staat er een form om een review te maken; wanneer de gebruiker niet is ingelogd, staat er alleen
+                    een link naar de login-pagina-->
                     <?php if(isset($_SESSION['username'])){?>
                         <form id="upload_anchor" action="" method="post">
                             <input type="text" name="subject" placeholder="Voer een titel in">
@@ -117,6 +122,7 @@ while($row=mysqli_fetch_array($result)){
                             <input type="submit" name="submit_review" value="Review versturen" class="btn btn-success">
                         </form>
                         <?php
+                        //hier wordt de heschreven review verstuurd, samen met de uit de tabel user opgehaalde userID (die hoort bij de username in de sessie)
                         if(isset($_POST['submit_review'])){
                             $subject=$_POST['subject'];
                             $message=$_POST['message'];
@@ -141,7 +147,7 @@ while($row=mysqli_fetch_array($result)){
             </div>
         </div>
     </div>
-    <?php } ?>
+<?php } ?>
 
 <?php
 include './includes/footer.php';

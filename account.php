@@ -13,13 +13,15 @@ $crypt = new \Zend\Crypt\Password\Bcrypt();
 
 $username=$_SESSION['username'];
 
-$sql="SELECT * FROM user WHERE username='$username'";//selecteer alles uit de tabel user waar de gebruikersnaam gelijk is aan de gebruikersnaam in de sessie(dus de ingelogde gebruiker)
+$sql="SELECT * FROM user WHERE username='$username'";
+//selecteer alles uit de tabel user waar de gebruikersnaam gelijk is aan de gebruikersnaam in de sessie(dus de ingelogde gebruiker)
 $result=$conn->query($sql);
 if(mysqli_num_rows($result)==0){
     header('Location: login.php');
     exit();
 }
 //var_dump($result);
+//alle opgehaalde info (door bovenstaande query) tonen dmv een while-loop
 while($row=mysqli_fetch_assoc($result)) {
     ?>
 
@@ -37,7 +39,8 @@ while($row=mysqli_fetch_assoc($result)) {
                 <!-- 1 active tab at a time! -->
                 <div id="home" class="tab-pane fade in active">
                     <h2 class="text-center">Gegevens van <?php echo $row['username']; ?></h2>
-                    <form action="" method="post"><!--form waarin de door de bovenstaande query gegevens getoond worden-->
+                    <form action="" method="post">
+                        <!--form waarin de door de bovenstaande query gegevens getoond worden-->
                         <input type="text" name="first_name" placeholder="Voornaam" value="<?php echo $row['first_name']; ?>" required>
                         <input type="text" name="last_name" placeholder="Achternaam" value="<?php echo $row['last_name']; ?>" required>
                         <input type="email" name="email" placeholder="E-mailadres" value="<?php echo $row['email']; ?>" required>
@@ -48,6 +51,7 @@ while($row=mysqli_fetch_assoc($result)) {
                         <input type="tel" name="phonenumber" placeholder="Telefoonnummer" value="0<?php echo $row['phonenumber']; ?>" required>
 
                         <?php
+                        //als in de database voor de gebruiker de nieuwsbrief op 1 (dus "ja") stata, dan is de checkbox aangevinkt; anders niet
                         if($row['newsletter'] ==1){
                             $checked="checked";
                         }else {
@@ -72,15 +76,6 @@ while($row=mysqli_fetch_assoc($result)) {
                     $phonenumber = mysqli_real_escape_string($conn, $_POST['phonenumber']);
                     $newsletter = mysqli_real_escape_string($conn, $_POST['newsletter']);
 
-//                    $sql2 = "UPDATE user SET first_name = '$first_name', last_name = '$last_name', email = '$email', address = '$address', housenumber = '$housenumber', zipcode = '$zipcode', city = '$city', phonenumber = '$phonenumber', newsletter = '$newsletter' WHERE username = '$username'";
-//                    $result2 = $conn->query($sql2);
-//                    if($conn->query($sql2) === TRUE){
-//                        echo "";
-//                        echo "<meta http-equiv='refresh' content='0'>";
-//                    }else{
-//                        echo "Error: " . $sql2 . "<br>" . $conn->error;
-//                    }
-
                     $stmt=$conn->prepare("UPDATE user SET first_name=?, last_name=?, email=?, address=?, housenumber=?, zipcode=?, city=?, phonenumber=?, newsletter=? WHERE username = '$username'");
                     $stmt->bind_param("ssssissii", $first_name, $last_name, $email, $address, $housenumber, $zipcode, $city, $phonenumber, $newsletter);
                     $stmt->execute();
@@ -97,9 +92,10 @@ while($row=mysqli_fetch_assoc($result)) {
                         while ($row5 = mysqli_fetch_assoc($result5)) {
                             ?>
                             <div class="btn btn-info col-xs-12" data-toggle="collapse"
-                                data-target="#demo<?php echo $row5['orderID']; ?>">
+                                 data-target="#demo<?php echo $row5['orderID']; ?>">
                                 <p class="col-xs-10 col-xs-offset-1">Ordernummer: <?php echo $row5['orderID']; ?></p>
-                                <button class="btn btn-success col-xs-1" onclick="printDiv<?php echo $row5['orderID']; ?>()">Print</button><!--iedere functie is uniek, door het toevoegen van de orderID, hierdoor roept elke button alleen de printfunctie aan voor de bijbehorende order en dus niet voor de hele pagina-->
+                                <button class="btn btn-success col-xs-1" onclick="printDiv<?php echo $row5['orderID']; ?>()">Print</button>
+                                <!--iedere functie is uniek, door het toevoegen van de orderID, hierdoor roept elke button alleen de printfunctie aan voor de bijbehorende order en dus niet voor de hele pagina-->
                                 <script>
                                     function printDiv<?php echo $row5['orderID']; ?>() {
                                         window.frames["print_frame<?php echo $row5['orderID']; ?>"].document.body.innerHTML = document.getElementById("demo<?php echo $row5['orderID']; ?>").innerHTML;
@@ -124,25 +120,26 @@ while($row=mysqli_fetch_assoc($result)) {
                                         <th>Totaalprijs</th>
                                     </tr>
                                     <?php
-                                    //hier wordt de inhoud van order_line en product opgehaald, waar de orderID overeenkomt met de orderID van de gekozen order(de gekozen collapse), hierdoor krijg je alleen de producten uit de gekozen order te zien
+                                    //hier wordt de inhoud van order_line en product opgehaald, waar de orderID overeenkomt met de orderID van de gekozen
+                                    // order(de gekozen collapse), hierdoor krijg je alleen de producten uit de gekozen order te zien
                                     $orderID=$row5['orderID'];
                                     $sql6="SELECT * FROM order_line, product WHERE orderID='$orderID' and order_line.productID=product.productID";
                                     $result6=$conn->query($sql6);
                                     while($row6=mysqli_fetch_array($result6)){
                                         ?>
-                                    <tr>
-                                        <td><?php echo $row6['productID']; ?></td>
-                                        <td><?php echo $row6['name']; ?></td>
-                                        <td><?php echo $row6['description']; ?></td>
-                                        <td>&euro;<?php echo $row6['price']; ?>,00</td>
-                                        <td><?php echo $row6['quantity']; ?></td>
-                                        <td>&euro;<?php echo $row6['price']*$row6['quantity']; ?>,00</td>
-                                    </tr>
+                                        <tr>
+                                            <td><?php echo $row6['productID']; ?></td>
+                                            <td><?php echo $row6['name']; ?></td>
+                                            <td><?php echo $row6['description']; ?></td>
+                                            <td>&euro;<?php echo $row6['price']; ?>,00</td>
+                                            <td><?php echo $row6['quantity']; ?></td>
+                                            <td>&euro;<?php echo $row6['price']*$row6['quantity']; ?>,00</td>
+                                        </tr>
                                         <?php
                                     }
                                     ?>
                                 </table>
-<!--                                <button class="btn btn-success" onclick="myFunction()">Printen</button>-->
+                                <!--                                <button class="btn btn-success" onclick="myFunction()">Printen</button>-->
                             </div>
                             <?php
                         }
@@ -158,10 +155,14 @@ while($row=mysqli_fetch_assoc($result)) {
                         <input type="password" name="old_password" placeholder="Oud wachtwoord">
                         <input type="password" name="new_password1" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" placeholder="Nieuw wachtwoord" required>
                         <input type="password" name="new_password2" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" placeholder="Nieuw wachtwoord herhalen">
+                        <!--                        pattern zorgt ervoor dat het gebruik van bepaalde tekens afgedwongen wordt-->
                         <input type="submit" name="change_password_btn" value="Wachtwoord wijzigen">
                     </form>
                     <?php
-                    //hier worden eerst de waarden uit de form opgehaald, daarna wordt het wachtwoord uit de database gehaald die bij de ingelogde gebruikersnaam hoort, die wordt dmv Bcrypt vergeleken met het ingevoerde wachtwoord, daarna worden de 2 nieuwe ingevoerde wachtwoorden met elkaar vergeleken, als dit allemaal klopt wordt het nieuwe password gehashed en wordt de tabel user geupdate met het nieuwe wachtwoord.
+                    //hier worden eerst de waarden uit de form opgehaald, daarna wordt het wachtwoord uit de database gehaald die bij de ingelogde
+                    // gebruikersnaam hoort, die wordt dmv Bcrypt vergeleken met het ingevoerde wachtwoord, daarna worden de 2 nieuwe ingevoerde
+                    // wachtwoorden met elkaar vergeleken, als dit allemaal klopt wordt het nieuwe password gehashed en wordt de tabel user geupdate
+                    // met het nieuwe wachtwoord.
                     if(isset($_POST['change_password_btn'])){
                         $old_password=mysqli_real_escape_string($conn, $_POST['old_password']);
                         $new_password1=mysqli_real_escape_string($conn, $_POST['new_password1']);
@@ -177,13 +178,6 @@ while($row=mysqli_fetch_assoc($result)) {
                                 if ($new_password1 == $new_password2) {
                                     $hashed_password_new = $crypt->create($new_password2);
 
-//                                    $sql4 = "UPDATE user SET password = '$hashed_password_new' WHERE username = '$username'";
-//                                    $result4 = $conn->query($sql4);
-//                                    if ($conn->query($sql4) === TRUE) {
-//                                        echo "Uw wachtwoord is aangepast!";
-//                                    } else {
-//                                        echo "Error: " . $sql4 . "<br>" . $conn->error;
-//                                    }
                                     $stmt=$conn->prepare("UPDATE user SET password=? WHERE username='$username'");
                                     $stmt->bind_param("s", $hashed_password_new);
                                     $stmt->execute();
@@ -219,13 +213,7 @@ while($row=mysqli_fetch_assoc($result)) {
                         while($rowuserID=mysqli_fetch_array($resultuserID)){
                             $userID=$rowuserID['userID'];
                         }
-//                        $sql8 = "INSERT INTO message (userID, timestamp, message, subject) VALUES ((SELECT userID FROM user WHERE username='$username'), '$timestamp', '$message', '$subject')";
-//                        $result8=$conn->query($sql8);
-//                        if($result8){
-//                            echo "Bericht versturen gelukt.";
-//                        }else{
-//                            echo "Bericht versturen mislukt.";
-//                        }
+
                         $stmt=$conn->prepare("INSERT INTO message(userID, timestamp, subject, message) VALUES (?, ?, ?, ?)");
                         $stmt->bind_param("isss", $userID, $timestamp, $subject, $message);
                         $stmt->execute();
@@ -235,6 +223,7 @@ while($row=mysqli_fetch_assoc($result)) {
                         }
                     }?>
                     <?php
+                    //hier worden alle berichten uit de tabel messages opgehaald voor de ingelogde gebruiker
                     $sql7="SELECT * FROM message WHERE (SELECT username FROM user WHERE user.userID=message.userID)='$username'";
                     $result7=$conn->query($sql7);
                     while($row7=mysqli_fetch_array($result7)) {

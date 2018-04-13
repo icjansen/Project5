@@ -12,7 +12,7 @@ require 'vendor/autoload.php';
 $crypt = new \Zend\Crypt\Password\Bcrypt();
 
 ?>
-
+<!--registratieformulier-->
 <div class="container">
     <h1 class="text-center">Registreren</h1>
     <br>
@@ -35,6 +35,7 @@ $crypt = new \Zend\Crypt\Password\Bcrypt();
 </div>
 
 <?php
+//hier worden alle ingevulde gegevens uit de bovenstaande form opgehaald
 if(isset($_POST['signup_btn'])){
     $first_name=mysqli_real_escape_string($conn, $_POST['first_name']);
     $last_name=mysqli_real_escape_string($conn, $_POST['last_name']);
@@ -51,22 +52,8 @@ if(isset($_POST['signup_btn'])){
     $hashed_password = $crypt->create($password1);
     $role = "user";
 
+    //hier wordt gecontroleerd of de 2 ingevoerde wachtwoorden overeenkomen, en wordt alles in de tabel user gezet
     if($password1==$password2) {
-//        $sql = "INSERT INTO user (username, password, first_name, last_name, address, housenumber, zipcode, city, email, phonenumber, newsletter, role)
-//                VALUES ('$username', '$hashed_password', '$first_name', '$last_name', '$address', '$housenumber', '$zipcode', '$city', '$email', '$phonenumber', '$newsletter', '$role') ";
-//        $result = $conn->query($sql);
-////        var_dump($sql);
-////        echo mysqli_error($conn);
-//        if ($result) {
-//            $_SESSION['username']=$username;
-//            $_SESSION['first_name']=$first_name;
-//            echo "Registreren gelukt.";
-////            header('Location: index.php');
-////            exit();
-//        } else {
-//            echo "Registreren mislukt!";
-//        }
-
         $stmt=$conn->prepare("INSERT INTO user(username, password, first_name, last_name, address, housenumber, zipcode, city, email, phonenumber, newsletter, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?)");
         $stmt->bind_param("sssssisssiis", $username, $hashed_password,  $first_name, $last_name, $address, $housenumber, $zipcode, $city, $email, $phonenumber, $newsletter, $role);
         if($stmt->execute()){

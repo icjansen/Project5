@@ -6,6 +6,7 @@
  * Time: 15:08
  */
 
+//maakt de database-connectie
 $servername = "localhost";
 $username = "Iris";
 $password = "0000";

@@ -2,12 +2,14 @@
 include "./includes/head.php";
 include "./includes/navbar.php";
 
+//als er nog geen sessie(cart) bestaat, wordt deze gemaakt met een lege tweedimensionale array
 if(!isset($_SESSION['cart'])) {
     $array = array(array());
     $_SESSION['cart'] = $array;
 }
 
-$sql="SELECT * FROM product";//hiermee wordt alles uit de tabel product geselecteerd, en dmv een while-loop getoond.
+//hiermee wordt alles uit de tabel product geselecteerd, en dmv een while-loop getoond.
+$sql="SELECT * FROM product";
 $result=$conn->query($sql);
 while($row=mysqli_fetch_array($result)){
     ?>
@@ -35,7 +37,9 @@ while($row=mysqli_fetch_array($result)){
     </div>
     <?php
 }
-if(isset($_POST['add_to_cart'])){//de inhoud van het formulier wordt opgehaald, en dmv array_push wordt de productID toegevoegd aan het array die in de sessie wordt opgeslagen
+//de inhoud van het formulier wordt opgehaald, en dmv array_push worden de productID en de bijbehorende hoeveelheid toegevoegd
+// aan het array die in de sessie wordt opgeslagen
+if(isset($_POST['add_to_cart'])){
     $array=$_SESSION['cart'];
     $productID=$_POST['productID'];
     $quantity=$_POST['product_quantity'];
@@ -51,3 +55,6 @@ if(isset($_POST['add_to_cart'])){//de inhoud van het formulier wordt opgehaald, 
 }
 
 //include './includes/footer.php';
+    ?>
+</body>
+</html>

@@ -6,6 +6,7 @@
  * Time: 15:34
  */
 
+//de sessie wordt eerst gestart, en daarna afgebroken
 session_start();
 session_destroy();
 header('Location: index.php');

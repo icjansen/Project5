@@ -8,12 +8,6 @@
 include "./includes/head.php";
 include "./includes/navbar.php";
 $username=$_SESSION['username'];
-//$sql2="SELECT * FROM user WHERE username='$username'";
-//$result2=$conn->query($sql2);
-//while($row2=mysqli_fetch_array($result2)){
-//    $_SESSION['userID']=$row2['userID'];
-//}
-//$userID=$_SESSION['userID'];
 
 if(!isset($_SESSION['cart'])) {
     $array = array();
@@ -28,9 +22,7 @@ echo "<pre>";
 print_r($array);
 echo "</pre>";
 
-//met foreach elk product, query per product?
-
-//$sql="SELECT * FROM product";
+//met foreach elk product, query per product
 
 //wanneer op bestellen wordt geklikt, nieuwe order aanmaken met besteltijd en gekozen afleverdatum
 if(isset($_POST['confirm_order'])) {
@@ -54,11 +46,11 @@ if(isset($_POST['confirm_order'])) {
     $stmt->close();
 
     foreach ($array as $arrayproduct) {
-            $productID = $arrayproduct[0];
-            $quantity = $arrayproduct[1];
-            //$productID = $arrayproduct;
+        $productID = $arrayproduct[0];
+        $quantity = $arrayproduct[1];
+        //$productID = $arrayproduct;
 
-//de hierboven opgehaalde orderID met de daarboven aangegeven productID en quantity versturen naar de tabel order_line
+//de hierboven opgehaalde orderID met de daarboven aangegeven productID en quantity versturen naar de tabel order_line, per product in de sessie (met foreach)
         $stmt = $conn->prepare("INSERT INTO order_line (orderID, productID, quantity) VALUES (?, ?, ?)");
         $stmt->bind_param("iii", $orderID, $productID, $quantity);
         $stmt->execute();
@@ -67,6 +59,7 @@ if(isset($_POST['confirm_order'])) {
         $_SESSION['cart'] = $array;
     }
 }
+//als de sessie(winkelwagentje) NIET leeg is, dan wordt de button "bestelling afronden" getoond; wanneer de sessie wel leeg is, wordt alleen de tekst getoond
 if($_SESSION['cart'] != null){
     ?>
     <div class="container">

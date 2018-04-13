@@ -12,6 +12,7 @@ require 'vendor/autoload.php';
 $crypt = new \Zend\Crypt\Password\Bcrypt();
 ?>
 
+<!--inlogformulier-->
 <div class="container">
     <h1 class="text-center">Inloggen</h1>
     <br>
@@ -23,6 +24,7 @@ $crypt = new \Zend\Crypt\Password\Bcrypt();
 </div>
 
 <?php
+//hier wordt eerst gekeken of de ingevoerde username in de tabel user staat, daarna wordt gekeken of het ingevoerde wachtwoord bij die gebruikersnaam hoort
 if(isset($_POST['login_btn'])){
     $username=mysqli_real_escape_string($conn, $_POST['username']);
     $password=mysqli_real_escape_string($conn, $_POST['password']);

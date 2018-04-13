@@ -8,16 +8,6 @@
 include "./includes/head.php";
 include "./includes/navbar.php";
 ?>
-<style>
-    /*.col-xs-3, .col-xs-6{
-        height: 750px;
-    }
-
-    .col-xs-6{
-        border: solid black 1px;
-    }*/
-</style>
-
 <div class="container-fluid" style="margin-top: 6%;">
     <div class="col-xs-12">
         <div class="jumbotron">
